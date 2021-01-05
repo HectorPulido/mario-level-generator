@@ -1,6 +1,8 @@
 # MARIO DEEP LEARNING LEVEL GENERATOR
 This is an lstm trained to generate Super Mario Levels
 
+[![Mario level generator video](https://img.youtube.com/vi/9fHIjV6Bj6I/0.jpg)](https://www.youtube.com/watch?v=9fHIjV6Bj6I)
+
 ## How to Run
 1. To Train
 ```
