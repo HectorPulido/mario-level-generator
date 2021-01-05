@@ -3,7 +3,9 @@ import numpy as np
 import torch.nn.functional as F
 
 
-def sample(model, n_chars, indx_to_chars, chars_to_indx, max_length=-1, start_letter='-'):
+def sample(
+    model, n_chars, indx_to_chars, chars_to_indx, max_length=-1, start_letter="-"
+):
     with torch.no_grad():  # no need to track history in sampling
         input = model.input_process(start_letter, chars_to_indx)
         input = input.view(1, input.shape[0], input.shape[1])
@@ -17,7 +19,7 @@ def sample(model, n_chars, indx_to_chars, chars_to_indx, max_length=-1, start_le
             p, top_ch = p.topk(3)
             top_ch = top_ch.numpy().squeeze()
             p = p.numpy().squeeze()
-            topi = np.random.choice(top_ch, p=p/p.sum())
+            topi = np.random.choice(top_ch, p=p / p.sum())
             if topi == chars_to_indx["@"]:
                 break
             else:

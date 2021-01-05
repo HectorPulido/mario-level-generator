@@ -1,11 +1,6 @@
 import glob
 
-replace_matrix = {
-    "#": "X",
-    "B": "S",
-    "p": "[",
-    "P": "]"
-}
+replace_matrix = {"#": "X", "B": "S", "p": "[", "P": "]"}
 
 
 def get_paths(path):

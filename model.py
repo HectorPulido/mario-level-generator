@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 class Model(nn.Module):
     def __init__(self, input_size, hidden_size, dropout, device, n_layers=3):
         super(Model, self).__init__()
@@ -10,8 +11,9 @@ class Model(nn.Module):
         self.n_layers = n_layers
         self.dropout = dropout
         self.device = device
-        self.rnn = nn.LSTM(input_size, hidden_size, self.n_layers,
-                           dropout=dropout, batch_first=True)
+        self.rnn = nn.LSTM(
+            input_size, hidden_size, self.n_layers, dropout=dropout, batch_first=True
+        )
         self.fc = nn.Linear(hidden_size, input_size)
 
     def forward(self, hidden, x):
@@ -26,8 +28,14 @@ class Model(nn.Module):
     def init_hidden(self, batch_size=1):
         weight = next(self.parameters()).data
 
-        hidden = (weight.new(self.n_layers, batch_size, self.hidden_size).zero_().to(self.device),
-                  weight.new(self.n_layers, batch_size, self.hidden_size).zero_().to(self.device))
+        hidden = (
+            weight.new(self.n_layers, batch_size, self.hidden_size)
+            .zero_()
+            .to(self.device),
+            weight.new(self.n_layers, batch_size, self.hidden_size)
+            .zero_()
+            .to(self.device),
+        )
 
         return hidden
 
@@ -48,4 +56,3 @@ class Model(nn.Module):
         data = data[1:]
         data.append(self.input_size - 1)
         return torch.tensor(data).to(self.device)
-

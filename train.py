@@ -9,13 +9,12 @@ import sample as s
 import pickle
 import argparse
 
-parser = argparse.ArgumentParser(description='train the model')
-parser.add_argument('--model_checkpoint', type=str,  help='')
+parser = argparse.ArgumentParser(description="train the model")
+parser.add_argument("--model_checkpoint", type=str, help="")
 
-levels, chars, indx_to_chars, chars_to_indx, n_chars = t.get_everything(
-    "levels/*.txt")
+levels, chars, indx_to_chars, chars_to_indx, n_chars = t.get_everything("levels/*.txt")
 
-with open('character_data.pickle', 'wb') as f:
+with open("character_data.pickle", "wb") as f:
     pickle.dump((chars, indx_to_chars, chars_to_indx, n_chars), f)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -23,9 +22,9 @@ model = m.Model(n_chars, 50, 0.25, device, 2).to(device)
 
 args = parser.parse_args()
 if args.model_checkpoint != None:
-    model.load_state_dict(torch.load(
-        args.model_checkpoint, map_location=device))
+    model.load_state_dict(torch.load(args.model_checkpoint, map_location=device))
     model.eval()
+
 
 def random_data(batch_size):
     levels_to_process = []
@@ -87,8 +86,11 @@ for i in range(0, n_iters):
     if i % print_every == 0:
         print(f"====================EPOCH: {i}=================")
         print(loss)
-        print(s.sample(model, n_chars, indx_to_chars,
-                       chars_to_indx, 255).replace("\n", "°"))
+        print(
+            s.sample(model, n_chars, indx_to_chars, chars_to_indx, 255).replace(
+                "\n", "°"
+            )
+        )
         torch.save(model.state_dict(), "model.mod")
 
     if i % plot_every == 0:

@@ -25,7 +25,7 @@ def read_lines(path):
         for j in level:
             level_complete += j[i]
         level_complete += "\n"
-    return level_complete + "@" # @ is EOL 
+    return level_complete + "@"  # @ is EOL
 
 
 def all_levels(paths):
